@@ -1,0 +1,22 @@
+{% load static }
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <title>{% block title %} Guest {% endblock %}</title>
+    </head>
+    <body>
+        {% include 'hostel_main/header.html'}
+        <h2>Discover Your Perfect Stay</h2>
+        <p>Explore our hostels and find the perfect location and rooms
+           that fits your taste for your next adventure.</p>
+        <a href="{% url 'hostel_list' %}" class="button">Browse Hostels</a>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+        {% include 'hostel_main/footer.html'}
+    </body>
+</html>

@@ -24,20 +24,19 @@ class UserManager(BaseUserManager):
 
             Help to create an adminstrative user account
         """
-        extra_fields.setdefault("is_administrator", True)
+        extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         return self.create_user(email, password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    full_name: CharField = models.CharField(max_length=100, help_text="Enter full name here")
     email: EmailField = models.EmailField(max_length=100, unique=True)
-    is_administrator: BooleanField = models.BooleanField(default=False)
+    is_staff: BooleanField = models.BooleanField(default=False)
     is_active: BooleanField = models.BooleanField(default=True)
 
     class Meta:
         ordering = [
-            'full_name',
+            '-email',
         ]
         indexes = [
             models.Index(fields=['is_active'])
@@ -45,7 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = 'full_name'
+    REQUIRED_FIELDS = 'email'
 
     def __str__(self) -> str:
         """Return First, middle, and last names as strings
