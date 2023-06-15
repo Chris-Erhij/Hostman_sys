@@ -3,10 +3,14 @@
 
 {% block title %} Resident Dashboard {% endblock %}
 {% block content %}
-    <h2>Welcome, Resident!</h2>
+    {% include 'hostel_main/header.html'}
 
-    <!-- Display managed hostels -->
-    <h3>Your Bookings</h3>
-    <p>Browser Hostels and Rooms</p>
-{% include 'hostel_main/footer.html'}
+    <div>
+        <h2>Welcome, Resident!</h2>
+        <!-- Display managed hostels -->
+        <h3>Your Bookings</h3>
+        <p>Browser Hostels and Rooms</p>
+    </div>
+
+    {% include 'hostel_main/footer.html'}
 {% endblock %}

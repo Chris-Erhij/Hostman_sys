@@ -1,0 +1,11 @@
+<div class="signup">
+    <div class="user signup form">
+        <p>Don't have an account? signup using this form.<br>Already have an 
+           account <a href="{url 'account:signin-view'}"> sign-in </a> </p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Sign-up</button>
+        </form>
+    </div>
+</div>

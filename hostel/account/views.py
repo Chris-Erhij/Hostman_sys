@@ -1,27 +1,32 @@
 from django.shortcuts import render, redirect
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from .models import User
+from django.contrib import messages
+from .forms import UserSignInForm, UserSignUpForm
 
 
-def signup(request: HttpRequest) -> HttpResponse:
+def signup(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     if request.method == 'POST':
-        # Handle form submission
-        email = request.POST['email']
-        password = request.POST['password']
-        account_type  = request.POST['']
+        form = UserSignUpForm(request.POST)
 
-        # Create resident user
-        resident_user = User.objects.create_user(
-            email=email, password=password,
-            )
-        # Creat staff user
-        admin_user = User.objects.create_superuser(
-            email=email, password=password,
-        )
-        if resident_user:
-            return render(request, "hostel_main/accommodation/resident_dash.html")
-        if admin_user:
-            return render(request, "hostel_main/accommodation/resident_dash.html")
-        
-        # Additional logic (e.g., redirect to login page)
-    return render(request, 'signup.html')
+        if form.is_valid():
+            cd = form.cleaned_data
+
+            # Create resident or admin user
+            if cd['is_staff']:
+                user = User.objects.create_user(
+                    email=cd['email'], password=cd['password'], is_staff=cd['is_staff']
+                    )
+                
+                # persist user to database
+                user.save()
+
+                return redirect('account:signin-view')
+            else:
+                raise ValueError(messages.error(message="You must select an account type!"))
+        form = UserSignUpForm()
+    return render(request, 'account/signup.html', {'form': form})
+
+
+def signin(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
+    pass
