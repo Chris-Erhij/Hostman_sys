@@ -15,7 +15,7 @@ def signup(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
             # Create resident or admin user
             if cd['is_staff']:
                 user = User.objects.create_user(
-                    email=cd['email'], password=cd['password'], is_staff=cd['is_staff']
+                    email=cd['email'], is_staff=cd['is_staff']
                     )
                 
                 # persist user to database
@@ -24,6 +24,7 @@ def signup(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
                 return redirect('account:signin-view')
             else:
                 raise ValueError(messages.error(message="You must select an account type!"))
+    else:     
         form = UserSignUpForm()
     return render(request, 'account/signup.html', {'form': form})
 

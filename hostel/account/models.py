@@ -2,20 +2,20 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.db.models import (
-    CharField, EmailField, BooleanField
+    EmailField, BooleanField
 )
 
 
 # User manager class
 class UserManager(BaseUserManager):
-    def create_user(self, email, password, is_staff, **extra_fields):
+    def create_user(self, email, password=None, **extra_fields):
         """Create and return an administrative or resident account
         """
-        if not email or password or is_staff:
-            raise ValueError("All fields must be set")
+        if not email:
+            raise ValueError("Email field must be set")
         email = self.normalize_email(email)
-        user = self.model(email=email, is_staff=is_staff, **extra_fields)
-        user.set_password(password)
+        user = self.model(email=email, **extra_fields)
+        user.set_unusable_password(password)
         user.save()
         return user
 
@@ -24,26 +24,15 @@ class UserManager(BaseUserManager):
 
             Help to create an adminstrative user account
         """
-        extra_fields.setdefault("is_staff", 'admin')
+        extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         return self.create_user(email, password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-
-    EMPTY = None
-    ADMIN = 'admin'
-    RESIDENT = 'resident'
-
-    CHOICES = [
-        (EMPTY, None),
-        (ADMIN, 'admin'),
-        (RESIDENT, 'resident'),
-    ]
-
-    email: EmailField = models.EmailField(max_length=100, unique=True)
-    is_staff: CharField = models.CharField(max_length=10, choices=CHOICES)
-    is_active: BooleanField = models.BooleanField(default=True)
+    email: EmailField = models.EmailField(max_length=150, unique=True)
+    is_staff: BooleanField = models.BooleanField(default=False, verbose_name="Admin account?")
+    is_active: BooleanField = models.BooleanField(default=True,)
 
     class Meta:
         ordering = [
@@ -55,7 +44,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['password', 'is_staff']
 
     def __str__(self) -> str:
         """Return First, middle, and last names as strings

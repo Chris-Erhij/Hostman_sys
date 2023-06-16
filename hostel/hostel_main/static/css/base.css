@@ -6,6 +6,15 @@ body {
     padding: 0;
 }
 
+.signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* line-height: inherit; */
+    /* text-align: center; */
+    /* line-height: 30px; */
+}
+
 .header {
     background-color: #8bc34a;
     padding: 20px;
