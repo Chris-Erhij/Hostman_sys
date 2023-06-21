@@ -3,6 +3,7 @@ from . import views
 
 app_name: str = 'hostel_main'
 urlpatterns = [
-    path('', views.index_view, name='index-view'),  # Not logged in
-    path('dash/', views.index_view, name='index-view-for-user')  # Logged in
+    path('guest/', views.guest_view, name='home-guest-view'),  # Guest.
+    path('admin/dash/', views.admin_dash, name='admin-dash-view'),  # Logged in as admin.
+    path('resident/dash/', views.resident_dash, name='resident-dash-view') # Logged in as resident.
 ]

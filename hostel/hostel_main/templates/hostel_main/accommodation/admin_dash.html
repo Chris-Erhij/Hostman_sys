@@ -1,11 +1,11 @@
-{% extends 'hostel_main/base.html'}
+{% extends 'hostel_main/base.html' %}
 {% load static %}
 
 {% block title %} Hostel Admin Dashboard {% endblock %}
 {% block content %}
-    {% include 'hostel_main/header.html'}
+    {% include 'hostel_main/header.html' %}
 
-    <div>
+    <div class="admin dash">
         <h2>Welcome, Hostel Admin!</h2>
         <!-- Display managed hostels -->
         <div>
@@ -14,5 +14,5 @@
         <p>Implement CRUD operations logic</p>
     </div>
 
-    {% include 'hostel_main/footer.html'}
+    {% include 'hostel_main/footer.html' %}
 {% endblock %}

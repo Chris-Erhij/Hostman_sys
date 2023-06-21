@@ -7,17 +7,17 @@
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
         <title>{% block title %} Guest {% endblock %}</title>
     </head>
+    <body>
     {% block content %}
         {% include 'hostel_main/header.html' %}
-        <body class="content">
-            <div>
-                <h1>Welcome, Guest</h1>
-                <h2>Discover Your Perfect Stay</h2>
-                <p>Explore our hostels and find the perfect location and rooms
-                   that fits your taste for your next adventure.</p>
-                <a href="/" class="button">Browse Hostels</a>
-            </div>
-        </body>
+        <div class="quest dash">
+            <h1>Welcome, Guest</h1>
+            <h2>Discover Your Perfect Stay</h2>
+            <p>Explore our hostels and find the perfect location and rooms
+                that fits your taste for your next adventure.</p>
+            <a href="{% url 'hostel_main:home-guest-view' %}" class="button">Browse Hostels</a>
+        </div>
         {% include 'hostel_main/footer.html' %}
     {% endblock %}
+    </body>
 </html>

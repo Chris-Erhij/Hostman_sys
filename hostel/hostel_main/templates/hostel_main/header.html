@@ -1,10 +1,12 @@
 <div class="header">
-    <div>
+    <div id="site-links">
         <a href="#contact" title="support">Contact</a>
         <a href="#about" title="Known what makes us tick">About</a>
-        <a href="{% url 'account:signup-view' %}" title="sign-up here">sign up</a>
+        <a href="{% url 'accounts:signup-view' %}" title="sign up here">sign up</a>
+        <a href="{% url 'accounts:signin-view' %}" title="sign in here">sign in</a>
+        <a href="{% url 'accounts:signout-view' %}" title="sign out here">sign out</a>
     </div>
-        <div>
-            <a href="/" title="Go to homepage"> Logo </a>
-        </div>
+    <div id="logo">
+        <a href="{% url 'hostel_main:home-guest-view' %}" title="Go to homepage"> Logo </a>
+    </div>
 </div>
