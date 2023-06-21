@@ -1,0 +1,17 @@
+{% extends 'hostel_main/base.html' %}
+{% load static %}
+
+{% block title %}Sign up{% endblock %}
+{% block content %}
+    <div class="signup">
+        <h3>Sign up</h3>
+        <p>Don't have an account? signup using this form.<br>Already have an 
+            account <a href="{% url 'accounts:signin-view' %}"> sign-in </a>
+        </p>
+        <form action="{% url 'accounts:signup-view' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value='Sign up' class="btn btn-primary">
+        </form>
+    </div>
+{% endblock %}
