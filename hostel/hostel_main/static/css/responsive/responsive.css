@@ -1,0 +1,41 @@
+/* CSS for responsiveness */
+@media (max-width: 768px) {
+    .welcome {
+      padding: 50px;
+    }
+    
+    .intro-text {
+      margin: 30px 0;
+    }
+    
+    .hostels,
+    .rooms {
+      margin-bottom: 30px;
+    }
+    
+    .hostels h3,
+    .rooms h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    
+    .hostels .button,
+    .rooms .button {
+      padding: 8px 16px;
+    }
+    
+    .testimonial h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    
+    .scrollable-cards {
+      overflow-x: scroll;
+    }
+    
+    .card {
+      width: 250px;
+      margin-right: 10px;
+    }
+  }  
+  
