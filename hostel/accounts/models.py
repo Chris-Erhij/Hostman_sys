@@ -2,7 +2,7 @@ from django.contrib.auth.models import (
     AbstractUser, Group, Permission
 )
 from django.db import models
-from django.db.models import CharField, ManyToManyField
+from django.db.models import CharField, ManyToManyField, EmailField
 
 
 class CustomeUser(AbstractUser):
@@ -15,9 +15,10 @@ class CustomeUser(AbstractUser):
         (ADMIN, 'Admin'),
         (RESIDENT, 'Resident'),
     ]
-    is_admin: CharField = models.CharField(max_length=10)
+    email: EmailField = models.EmailField(blank=False, unique=True)
+    is_admin: CharField = models.CharField(max_length=10, default='')
+
     groups: ManyToManyField = models.ManyToManyField(Group, related_name="Custome_users")
-    
     user_permissions: ManyToManyField = models.ManyToManyField(
         Permission,
         verbose_name = 'user permissions',
@@ -29,7 +30,7 @@ class CustomeUser(AbstractUser):
 
     class Meta:
         ordering = [
-            '-email',
+            '-date_joined',
         ]
         indexes = [
             models.Index(fields=['is_active'])

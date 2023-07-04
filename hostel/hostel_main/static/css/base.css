@@ -13,7 +13,7 @@ body {
     padding: 20px;
 }
 
-.signin .signup{
+.signin {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
@@ -34,17 +34,26 @@ h3 {
 }
 
 .header {
-    background-color: #8bc34a;
     padding: 40px;
+    background-color: rgb(14 233 14);
+    color: white;
+    display: flex;
 }
 
 div#site-links {
-    float: right;
+    margin-left: auto;
 }
 
-.header h1 {
-    margin: 0;
-    color: #fff;
+div#logo {
+    flex: 1;
+}
+
+div#logo a {
+    text-decoration: none;
+}
+
+div#site-links a {
+  text-decoration: none;
 }
 
 .button {
@@ -67,10 +76,6 @@ div#site-links {
     padding: 10px;
     text-align: center;
     font-size: 14px;
-}
-
-div#logo {
-    float: left;
 }
 
 .signup {
@@ -123,4 +128,154 @@ input[type="password"] {
 
 .btn-primary:hover {
     background-color: #0069d9;
+}
+
+/* Newly import styles */
+
+/* CSS for the HTML structure */
+.welcome {
+  position: relative;
+  background-position: center;
+  text-align: center;
+  padding: 100px;
+  color: #0ee90e;
+  margin: 0;
+  padding: 0;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5); /* Background color with transparency */
+    padding: 20px;
+    color: #fafafa; /* Text color */
+    z-index: 1; /* Ensures the text overlay appears above the background image */
+}
+
+.text-overlay h1 h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.text-overlay p {
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.intro-text {
+  text-align: center;
+  /* margin: 50px 0; */
+  color: white;
+  background-color: #0ee90e;
+  margin-top: 10px;
+  padding: inherit;
+}
+
+.hostels,
+.rooms {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.hostels h3,
+.rooms h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.hostels .button,
+.rooms .button {
+  display: inline-block;
+  background-color: #0ee90e;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: aquamarine;
+  transition: background-color 0.3s ease;
+}
+
+.hostels .button:hover,
+.rooms .button:hover {
+  background-color: #555;
+}
+
+.testimonial {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.testimonial h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.testimonial p {
+  margin: 10px 0;
+}
+
+.scrollable-cards {
+  overflow-x: auto;  /* Enable horizontal scrolling */
+  white-space: nowrap;  /* Prevent cards from wrapping to the next line */
+  border: 1px skyblue ;
+}
+
+.container-cards {
+  display: flex;
+  width: max-content;
+  scroll-behavior: smooth;
+}
+
+.card {
+  display: inline-block;  /* Display cards in a horizontal line */
+  width: 300px;
+  margin-right: 20px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 20px;
+  border: 0.1px solid;
+  border-radius: 5px;
+}
+
+/* Scroll buttons */
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: #ccc;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+}
+
+.prev-button {
+  left: 10px;
+}
+
+.next-button {
+  right: 10px;
+}
+
+.card h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  margin-bottom: 15px;
+}
+
+.button-anime {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f2f2f2;
+  text-decoration: none;
+  animation: buttonAnimation 2s linear infinite;
+  background-color: #0ee90e;
+  color:#f2f2f2;
+  margin-top: 5px;
 }

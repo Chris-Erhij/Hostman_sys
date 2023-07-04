@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from .forms import UserSignInForm, UserSignUpForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from .models import CustomeUser
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.urls import reverse
+
 
 def signup(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     if request.method == 'POST':
@@ -15,14 +16,21 @@ def signup(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
             user = form.save(commit=False,)
             is_admin = form.cleaned_data['is_admin']
             user.is_admin = is_admin
+
+            if user.is_admin == CustomeUser.ADMIN:
+                user = CustomeUser.objects.create_superuser(form.cleaned_data['username'], form.cleaned_data['email'],
+                                                       form.cleaned_data['password'])
+            else:
+                user = CustomeUser.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'],
+                                                       form.cleaned_data['password'])
+            user.is_admin = is_admin
             user.save()
 
-            if user.is_admin == CustomeUser.RESIDENT:
-                messages.success(request=request, message="Resident account created successfully")
-                return redirect("accounts:signin-view")
-            
-            elif user.is_admin == CustomeUser.ADMIN:
+            if user.is_staff and user.is_superuser and user.is_admin == CustomeUser.ADMIN:
                 messages.success(request=request, message="Admin account created successfully")
+                return redirect("accounts:admin-signin-view")
+            else:
+                messages.success(request=request, message="Resident account created successfully")
                 return redirect("accounts:signin-view")
         else:
             raise forms.ValidationError(message='Invalid credentials!, please try again')      
@@ -34,37 +42,30 @@ def signup(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
 def signin(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     if request.method == 'POST':
         auth_form = UserSignInForm(request.POST)
+        username_or_email = request.POST['username_or_email']
+        password = request.POST['password']
+        user = authenticate(username=username_or_email, password=password)
 
-        if auth_form.is_valid():
-            email = auth_form.cleaned_data['email']
-            password = auth_form.cleaned_data['password']
-
-            user = CustomeUser.objects.get(email=email, password=password)
-            if user:                
-                if user.is_admin == CustomeUser.ADMIN:
-                    request.session['next'] = "/home/admin/dash/"
-                    login(request, user)
-
-                    messages.success(request=request, message="Successfully logged in as an admin")
-                    return redirect(request.session.get('next', '/'))
-                
-                else:
-                    request.session['next'] = "/home/resident/dash/"
-                    login(request, user)
-
-                    messages.success(request=request, message="Successfully logged in as a resident")
-                    return redirect(request.session.get('next', '/'))
-            else:
-                messages.error(request=request, message="User does not exit or Invalid username or password." \
-                               "Please try again with correct credentials")
-                return render(request, "accounts/signin.html", {'auth_form': auth_form})
+        if user is not None and not user.is_staff:                
+            login(request, user)
+            messages.success(request=request, message="Successfully logged in as a Resident")
+            return redirect("hostel_main:resident-dash-view")
+        
+        elif user is not None and user.is_staff:
+            messages.success(request=request, message="Please use this admin signin form")
+            return redirect("accounts:admin-signin-view")
         else:        
-            messages.error(request=request, message="Invalid username or password")
-        return render(request, "accounts/signin.html", {'auth_form': auth_form})
+            messages.error(request=request, message="Invalid login credentials")
+            return render(request, "accounts/signin.html", {'auth_form': auth_form})
     
     else:
         auth_form = UserSignInForm()
     return render(request, "accounts/signin.html", {'auth_form': auth_form})
+
+
+def admin_signin(request: HttpRequest) -> HttpResponseRedirect:
+    admin_login_url = reverse('admin:login')
+    return redirect(admin_login_url)
 
 
 def signout(request: HttpRequest) -> HttpResponseRedirect:
