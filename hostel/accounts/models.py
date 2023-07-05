@@ -17,6 +17,7 @@ class CustomeUser(AbstractUser):
     ]
     email: EmailField = models.EmailField(blank=False, unique=True)
     is_admin: CharField = models.CharField(max_length=10, default='')
+    confirm_password: CharField = models.CharField(max_length=128, null=True)
 
     groups: ManyToManyField = models.ManyToManyField(Group, related_name="Custome_users")
     user_permissions: ManyToManyField = models.ManyToManyField(

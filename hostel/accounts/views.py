@@ -20,13 +20,15 @@ def signup(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
             if user.is_admin == CustomeUser.ADMIN:
                 user = CustomeUser.objects.create_superuser(form.cleaned_data['username'], form.cleaned_data['email'],
                                                        form.cleaned_data['password'])
+                user.is_superuser = False
+
             else:
                 user = CustomeUser.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'],
                                                        form.cleaned_data['password'])
             user.is_admin = is_admin
             user.save()
 
-            if user.is_staff and user.is_superuser and user.is_admin == CustomeUser.ADMIN:
+            if user.is_staff and user.is_admin == CustomeUser.ADMIN:
                 messages.success(request=request, message="Admin account created successfully")
                 return redirect("accounts:admin-signin-view")
             else:
