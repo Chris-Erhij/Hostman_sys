@@ -1,3 +1,4 @@
+import django
 from django.contrib.auth.models import (
     AbstractUser, Group, Permission
 )
@@ -15,9 +16,10 @@ class CustomeUser(AbstractUser):
         (ADMIN, 'Admin'),
         (RESIDENT, 'Resident'),
     ]
+    username: CharField = models.CharField(error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username')
     email: EmailField = models.EmailField(blank=False, unique=True)
     is_admin: CharField = models.CharField(max_length=10, default='')
-    confirm_password: CharField = models.CharField(max_length=128, null=True)
+    confirm_password: CharField = models.CharField(error_messages={'mismatch': 'Passwords do not match'}, max_length=128, null=True)
 
     groups: ManyToManyField = models.ManyToManyField(Group, related_name="Custome_users")
     user_permissions: ManyToManyField = models.ManyToManyField(

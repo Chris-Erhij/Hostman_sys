@@ -7,7 +7,7 @@ from django.db.models import (
 
 
 class Hostel(Model):
-    user: ForeignKey = models.ForeignKey(CustomeUser, on_delete=models.CASCADE, verbose_name="admin ID")
+    user: ForeignKey = models.ForeignKey(CustomeUser, to_field='username', on_delete=models.CASCADE, verbose_name='username')
     name: CharField = models.CharField(max_length=100, unique=False, help_text="Enter hostel name")
     address: CharField = models.CharField(max_length=200)
     capacity: IntegerField = models.IntegerField()
