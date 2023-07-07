@@ -7,6 +7,7 @@ from django.db.models import (
 
 
 class Hostel(Model):
+    image: ImageField = models.ImageField(upload_to="hostel_img/%y/%m/%d", blank=True)
     user: ForeignKey = models.ForeignKey(CustomeUser, to_field='username', on_delete=models.CASCADE, verbose_name='username')
     name: CharField = models.CharField(max_length=100, unique=False, help_text="Enter hostel name")
     address: CharField = models.CharField(max_length=200)
@@ -25,7 +26,7 @@ class Hostel(Model):
         ]
 
     def __str__(self) -> str:
-        """Return name of hostel as a string
+        """Return name and ID of hostel as a string when queried.
         """
         return F"Hostel name: {self.name}" \
                F"Hostel ID: {self.id}"
@@ -33,13 +34,13 @@ class Hostel(Model):
     
 class HostelRooms(Model):
     hostel: ForeignKey = models.ForeignKey(Hostel, related_name='rooms', on_delete=models.CASCADE)
-    image: ImageField = models.ImageField(upload_to="static_root%y%m%d", blank=True)
+    image: ImageField = models.ImageField(upload_to="room_img/%y/%m/%d", blank=True)
     is_occupied: BooleanField = models.BooleanField(default=False)
     room_capacity: IntegerField = models.IntegerField(default=2)
-    room_number: CharField = models.CharField(max_length=10, unique=True)
+    room_number: CharField = models.CharField(max_length=10, unique=False)
 
     def __str__(self) -> str:
-        """Return room number as string
+        """Return room number and ID as string when queried.
         """
         return F"Room number {self.room_number}" \
                F"Room ID: {self.id}"

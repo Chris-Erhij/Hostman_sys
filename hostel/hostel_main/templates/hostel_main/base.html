@@ -47,120 +47,25 @@
             <div class="hostels">
                 <h3>Luxury Hostels</h3>
                 <!-- Add scrollable cards for hostels -->
-                <div class="scrollable-cards">
-                    <script src="{% static 'js\arrow-key_button_scroll.js' %}"></script>
-                    <div class='container-cards'>
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="hostel1.jpg" alt="Hostel 1">
-                            </div>
-                            <div class="card-content">
-                                <h4>Hostel 1</h4>
-                                <p>Description of Hostel 1</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="button">More Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="hostel1.jpg" alt="Hostel 1">
-                            </div>
-                            <div class="card-content">
-                                <h4>Hostel 1</h4>
-                                <p>Description of Hostel 1</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="button">More Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="hostel1.jpg" alt="Hostel 1">
-                            </div>
-                            <div class="card-content">
-                                <h4>Hostel 1</h4>
-                                <p>Description of Hostel 1</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="button">More Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="hostel1.jpg" alt="Hostel 1">
-                            </div>
-                            <div class="card-content">
-                                <h4>Hostel 1</h4>
-                                <p>Description of Hostel 1</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="button">More Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="hostel1.jpg" alt="Hostel 1">
-                            </div>
-                            <div class="card-content">
-                                <h4>Hostel 1</h4>
-                                <p>Description of Hostel 1</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="button">More Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="hostel1.jpg" alt="Hostel 1">
-                            </div>
-                            <div class="card-content">
-                                <h4>Hostel 1</h4>
-                                <p>Description of Hostel 1</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="button">More Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="hostel1.jpg" alt="Hostel 1">
-                            </div>
-                            <div class="card-content">
-                                <h4>Hostel 1</h4>
-                                <p>Description of Hostel 1</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="button">More Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="hostel1.jpg" alt="Hostel 1">
-                            </div>
-                            <div class="card-content">
-                                <h4>Hostel 1</h4>
-                                <p>Description of Hostel 1</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="button">More Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="hostel1.jpg" alt="Hostel 1">
-                            </div>
-                            <div class="card-content">
-                                <h4>Hostel 1</h4>
-                                <p>Description of Hostel 1</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" class="button">More Details</a>
-                            </div>
-                        </div>
+                <div class="scrollable-cards-wrapper">
+                    {% for hostel in hostels %}
+                    <div class="scrollable-cards">
+                        <div class='container-cards'>
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="{% if hostel.image %}{{ hostel.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="{{ hostel.name }} background image">
+                                </div>
+                                <div class="card-content">
+                                    <h4>{{ hostel.name }}</h4>
+                                    <p>{{ hostel.description|truncatewords:6 }}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="button">More Details</a>
+                                </div>
+                            </div>                        
+                        </div>                    
                     </div>
-                    <button class="scroll-button prev-button">&#8249;</button>
-                    <button class="scroll-button next-button">&#8250;</button>
+                    {% endfor %}
                 </div>
                 <a href="{% url 'hostel_main:home-guest-view' %}" class="button">Browse more Hostels</a>
             </div>
@@ -170,79 +75,26 @@
             horizontally scrollable-->
             <div class="rooms">
                 <h3>Luxury Rooms</h3>
-                <div class="scrollable-cards">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="room1.jpg" alt="Room 1">
-                        </div>
-                        <div class="card-content">
-                            <h4>Room 1</h4>
-                            <p>Description of Room 1</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="button">More Details</a>
-                        </div>
+                <div class="scrollable-cards-wrapper">
+                    {% for room in rooms %}
+                    <div class="scrollable-cards">
+                        <div class="container-cards">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="room image">
+                                </div>
+                                <div class="card-content">
+                                    <h4>room number {{ room.room_number }}</h4>
+                                    <p>room available in {{ room.hostel.name }}</p>
+                                    <P>room capacity {{ room.room_capacity }}</P>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="button">More Details</a>
+                                </div>
+                            </div>
+                        </div>                    
                     </div>
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="room1.jpg" alt="Room 1">
-                        </div>
-                        <div class="card-content">
-                            <h4>Room 1</h4>
-                            <p>Description of Room 1</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="button">More Details</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="room1.jpg" alt="Room 1">
-                        </div>
-                        <div class="card-content">
-                            <h4>Room 1</h4>
-                            <p>Description of Room 1</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="button">More Details</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="room1.jpg" alt="Room 1">
-                        </div>
-                        <div class="card-content">
-                            <h4>Room 1</h4>
-                            <p>Description of Room 1</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="button">More Details</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="room1.jpg" alt="Room 1">
-                        </div>
-                        <div class="card-content">
-                            <h4>Room 1</h4>
-                            <p>Description of Room 1</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="button">More Details</a>
-                        </div>
-                    </div>>
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="room1.jpg" alt="Room 1">
-                        </div>
-                        <div class="card-content">
-                            <h4>Room 1</h4>
-                            <p>Description of Room 1</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="button">more Details</a>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
                 <a href="{% url 'hostel_main:home-guest-view' %}" class="button">Browse more Rooms</a>
             </div>
@@ -251,18 +103,54 @@
             content boxes-->
             <div class="testimonial">
                 <h3>What people love and are saying about us</h3>
-                <h6>Remember to replace this generated Lorem Ipsum text with your actual
-                    content when implementing it on your webpage.</h6>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
+                <h6>These are some of the reasons people chose Us</h6>
+                <div class="carousel">
+                    <div class="testimonial-item">
+                        <div class="customer-image">
+                            <img src="{% static 'images/Avatar.png' %}" alt="Customer image">
+                        </div>
+                        <div class="customer-testimonial">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Fusce consequat aliquet turpis id tempus<br>
+                               Lorem ipsum dolor sit amet, <br>consectetur adipiscing elit. <br>Fusce consequat aliquet turpis id tempus
+                            </p>
+                        </div>
+                        <div class="customer-name">
+                            <h4>John Doe</h4>
+                        </div>
+                    </div>
+                    <div class="testimonial-item">
+                        <div class="customer-image">
+                            <img src="{% static 'images/Avatar.png' %}" alt="Customer 2">
+                        </div>
+                        <div class="customer-testimonial">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Fusce consequat aliquet turpis id tempus<br>
+                               Lorem ipsum dolor sit amet, <br>consectetur adipiscing elit. <br>Fusce consequat aliquet turpis id tempus
+                            </p>
+                        </div>
+                        <div class="customer-name">
+                            <h4>Christian Erhijotah</h4>
+                        </div>
+                    </div>
+                    <div class="testimonial-item">
+                        <div class="customer-image">
+                            <img src="{% static 'images/Avatar.png' %}" alt="Customer 2">
+                        </div>
+                        <div class="customer-testimonial">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Fusce consequat aliquet turpis id tempus<br>
+                               Lorem ipsum dolor sit amet,<br>consectetur adipiscing elit. Fusce consequat aliquet turpis id tempus
+                            </p>
+                        </div>
+                        <div class="customer-name">
+                            <h4>Essien</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
         </div>
         {% include 'hostel_main/footer.html' %}
 
-        <!--Javascript libray-->
+        <!--Javascript library-->
         <script src="{% static 'js\arrow-key_button_scroll.js' %}"></script>
     {% endblock %}
     </body>

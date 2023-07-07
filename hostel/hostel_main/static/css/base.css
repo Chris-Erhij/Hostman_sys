@@ -131,8 +131,6 @@ input[type="password"] {
 }
 
 /* Newly import styles */
-
-/* CSS for the HTML structure */
 .welcome {
   position: relative;
   background-position: center;
@@ -167,7 +165,6 @@ input[type="password"] {
 
 .intro-text {
   text-align: center;
-  /* margin: 50px 0; */
   color: white;
   background-color: #0ee90e;
   margin-top: 10px;
@@ -202,64 +199,39 @@ input[type="password"] {
   background-color: #555;
 }
 
-.testimonial {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.testimonial h3 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.testimonial p {
-  margin: 10px 0;
-}
-
-.scrollable-cards {
+/* Scrollable card styles */
+.scrollable-cards-wrapper {
   overflow-x: auto;  /* Enable horizontal scrolling */
   white-space: nowrap;  /* Prevent cards from wrapping to the next line */
   border: 1px skyblue ;
 }
 
-.container-cards {
-  display: flex;
+.scrollable-cards {
+  display: inline-block;
   width: max-content;
   scroll-behavior: smooth;
+  vertical-align: top;
 }
 
 .card {
   display: inline-block;  /* Display cards in a horizontal line */
   width: 300px;
   margin-right: 20px;
-  background-color: #f1f1f1;
+  background-color: #a6f5b9;
   border-radius: 5px;
   padding: 20px;
   border: 0.1px solid;
   border-radius: 5px;
 }
 
-/* Scroll buttons */
-.scroll-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  background-color: #ccc;
-  border: none;
-  font-size: 20px;
-  color: #fff;
+/* Scroll card image styles */
+.card-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
 }
 
-.prev-button {
-  left: 10px;
-}
-
-.next-button {
-  right: 10px;
-}
-
+/* Card styles */
 .card h4 {
   font-size: 18px;
   margin-bottom: 10px;
@@ -278,4 +250,47 @@ input[type="password"] {
   background-color: #0ee90e;
   color:#f2f2f2;
   margin-top: 5px;
+}
+
+/* Testimonial styles */
+.carousel {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.testimonial-item {
+  flex: 0 0 auto;
+  margin-right: 10px;
+  scroll-snap-align: start;
+}
+
+.customer-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.customer-testimonial {
+  margin: 10px 0;
+}
+
+.customer-name {
+  font-weight: bold;
+}
+
+.testimonial {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.testimonial h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.testimonial p {
+  margin: 10px 0;
 }

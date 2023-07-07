@@ -40,7 +40,7 @@ class CustomeUser(AbstractUser):
         ]
 
     def __str__(self) -> str:
-        """Return email, username, as strings in the Admin.
+        """Return username, as strings when queried.
         """
-        return self.email.__str__()
+        return self.username.__str__()
     
