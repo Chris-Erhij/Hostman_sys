@@ -53,11 +53,14 @@
                         <div class='container-cards'>
                             <div class="card">
                                 <div class="card-image">
-                                    <img src="{% if hostel.image %}{{ hostel.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="{{ hostel.name }} background image">
+                                    <a href="{{ hostel.image.url }}"> <img src="{% if hostel.image %}{{ hostel.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="{{ hostel.name }} background image">
+                                    </a>
                                 </div>
                                 <div class="card-content">
                                     <h4>{{ hostel.name }}</h4>
-                                    <p>{{ hostel.description|truncatewords:6 }}</p>
+                                    <div class="hostel_description">
+                                        <p>{{ hostel.description|linebreaks|truncatewords:6 }}</p>
+                                    </div>
                                 </div>
                                 <div class="card-footer">
                                     <a href="#" class="button">More Details</a>
@@ -81,7 +84,8 @@
                         <div class="container-cards">
                             <div class="card">
                                 <div class="card-image">
-                                    <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="room image">
+                                    <a href="{{ room.image.url }}"> <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="room image">
+                                    </a>
                                 </div>
                                 <div class="card-content">
                                     <h4>room number {{ room.room_number }}</h4>

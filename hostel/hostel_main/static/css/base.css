@@ -237,7 +237,8 @@ input[type="password"] {
   margin-bottom: 10px;
 }
 
-.card p {
+.hostel_description {
+  display: contents;
   margin-bottom: 15px;
 }
 

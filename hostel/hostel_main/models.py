@@ -1,14 +1,15 @@
 from django.db import models
-from accounts.models import CustomeUser
 from django.db.models import (
     Model, TextField, ImageField, IntegerField, CharField,
-    BooleanField, ForeignKey, DateTimeField
+    BooleanField, ForeignKey, DateTimeField, DecimalField,
+    ManyToManyField
 )
+from booking.models import Booking
 
 
 class Hostel(Model):
+    user: ForeignKey = models.ForeignKey("accounts.CustomeUser", on_delete=models.CASCADE, related_name='hostel', null=True)
     image: ImageField = models.ImageField(upload_to="hostel_img/%y/%m/%d", blank=True)
-    user: ForeignKey = models.ForeignKey(CustomeUser, to_field='username', on_delete=models.CASCADE, verbose_name='username')
     name: CharField = models.CharField(max_length=100, unique=False, help_text="Enter hostel name")
     address: CharField = models.CharField(max_length=200)
     capacity: IntegerField = models.IntegerField()
@@ -33,11 +34,19 @@ class Hostel(Model):
 
     
 class HostelRooms(Model):
+    book: ManyToManyField = models.ManyToManyField(Booking, related_name='booked_room')
     hostel: ForeignKey = models.ForeignKey(Hostel, related_name='rooms', on_delete=models.CASCADE)
     image: ImageField = models.ImageField(upload_to="room_img/%y/%m/%d", blank=True)
     is_occupied: BooleanField = models.BooleanField(default=False)
     room_capacity: IntegerField = models.IntegerField(default=2)
     room_number: CharField = models.CharField(max_length=10, unique=False)
+    price: DecimalField = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+
+    # Unique together fields for foreignkey ref in Bookings
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['hostel', 'room_number'], name='hostel_room_no')
+        ]
 
     def __str__(self) -> str:
         """Return room number and ID as string when queried.

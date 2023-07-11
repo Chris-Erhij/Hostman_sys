@@ -1,14 +1,28 @@
+from django.core.validators import validate_email
 from django.db import models
 from django.db.models import (
-    Model, ForeignKey, DateField
+    Model, DateField, BooleanField,
+    DecimalField, CharField, EmailField, OneToOneField
 )
+from accounts.models import CustomeUser
 
 
 class Booking(Model):
-    user: ForeignKey = models.ForeignKey('accounts.CustomeUser', to_field='username', on_delete=models.CASCADE, verbose_name='username') # Circular imports for custom user model.
-    room: ForeignKey = models.ForeignKey('hostel_main.HostelRooms', on_delete=models.CASCADE) # Circular imports for custom user model.
-    check_in_date: DateField = models.DateField()
-    check_out_date: DateField = models.DateField()
+    BED = 'bed'; ROOM = 'room'
+
+    ACCOMMODATAION_CHOICES = [
+        (BED, 'Bed'),
+        (ROOM, 'Entire Room')
+    ]
+
+    user: OneToOneField = models.OneToOneField(CustomeUser, on_delete=models.CASCADE, related_name='booking', null=True)
+    first_name: CharField = models.CharField(max_length=150, verbose_name='First name', blank=True)
+    last_name: CharField = models.CharField(max_length=150, verbose_name='Last name', blank=True)
+    email: EmailField = models.EmailField(blank=False, verbose_name='Email', help_text='Enter valid email', validators=[validate_email], null=True)
+    check_in_date: DateField = models.DateField(help_text="Format: yy/mm/dd")
+    check_out_date: DateField = models.DateField(help_text="Format: yy/mm/dd")
+    booking_option: CharField = models.CharField(max_length=10, choices=ACCOMMODATAION_CHOICES, verbose_name='Accomodation type', default=ACCOMMODATAION_CHOICES[0])
+    paid: BooleanField = models.BooleanField(default=False)
 
     # Dunder method
     def __str__(self) -> str:

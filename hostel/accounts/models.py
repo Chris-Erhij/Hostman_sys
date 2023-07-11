@@ -3,7 +3,9 @@ from django.contrib.auth.models import (
     AbstractUser, Group, Permission
 )
 from django.db import models
-from django.db.models import CharField, ManyToManyField, EmailField
+from django.db.models import (CharField, ManyToManyField,
+                              EmailField, ForeignKey
+)
 
 
 class CustomeUser(AbstractUser):

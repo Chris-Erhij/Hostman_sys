@@ -120,6 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static_root/'
 
 # Uploaded image files
 MEDIA_URL = 'media/'
@@ -131,10 +132,16 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTHENTICATION_BACKENDS = [
-    'accounts.custom_auth_backend.CustomBackend',
+    'accounts.custom_auth_backend.CustomBackend',  # Custom authentication backend, to allow username or email for login.
     'django.contrib.auth.backends.ModelBackend',
 ]
 
 LOGIN_REDIRECT_URL = 'home/'
 
+# Custom user model
 AUTH_USER_MODEL = 'accounts.CustomeUser'
+
+STATICFILES_DIR = [
+    STATIC_ROOT,
+    MEDIA_ROOT,
+]
