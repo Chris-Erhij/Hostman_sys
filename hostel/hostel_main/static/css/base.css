@@ -35,7 +35,7 @@ h3 {
 
 .header {
     padding: 40px;
-    background-color: rgb(14 233 14);
+    background-color: #f5f5f5;
     color: white;
     display: flex;
 }
@@ -50,10 +50,13 @@ div#logo {
 
 div#logo a {
     text-decoration: none;
+    font-size: 24px;
+    font-weight: bolder;
 }
 
 div#site-links a {
   text-decoration: none;
+  padding: 8px;
 }
 
 .button {
@@ -85,7 +88,7 @@ div#site-links a {
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: white;
-    margin-top: 120px;
+    margin-top: 70px;
     margin-bottom: 20px;
     color: darkblue;
 }
@@ -165,8 +168,8 @@ input[type="password"] {
 
 .intro-text {
   text-align: center;
-  color: white;
-  background-color: #0ee90e;
+  color: #2196F3;
+  background-color: #ffffff;
   margin-top: 10px;
   padding: inherit;
 }
@@ -181,12 +184,13 @@ input[type="password"] {
 .rooms h3 {
   font-size: 24px;
   margin-bottom: 20px;
+  color: #2196F3;
 }
 
 .hostels .button,
 .rooms .button {
   display: inline-block;
-  background-color: #0ee90e;
+  background-color: #0069d9;
   color: #fff;
   padding: 10px 20px;
   border-radius: 5px;
@@ -216,12 +220,12 @@ input[type="password"] {
 .card {
   display: inline-block;  /* Display cards in a horizontal line */
   width: 300px;
+  background-color: white;
+  color: #0069d9;
   margin-right: 20px;
-  background-color: #a6f5b9;
-  border-radius: 5px;
   padding: 20px;
-  border: 0.1px solid;
-  border-radius: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 /* Scroll card image styles */
@@ -238,8 +242,15 @@ input[type="password"] {
 }
 
 .hostel_description {
-  display: contents;
-  margin-bottom: 15px;
+  height: -webkit-fill-available;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3; /* Number of lines to display */
+  word-wrap: break-word;
+}
+
+.hostel_description p {
+  color: #0069d9;
 }
 
 .button-anime {
@@ -294,4 +305,5 @@ input[type="password"] {
 
 .testimonial p {
   margin: 10px 0;
+  color: #0D47A1;
 }

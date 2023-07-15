@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ hostel.name }} {% endblock %}
+{% block content %}
+    {% include 'hostel_main/accommodation/res_header.html' %}
+
+    {% include 'hostel_main/accommodation/footer.html' %}
+{% endblock %}

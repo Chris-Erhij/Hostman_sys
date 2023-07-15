@@ -29,12 +29,10 @@ class Hostel(Model):
     def __str__(self) -> str:
         """Return name and ID of hostel as a string when queried.
         """
-        return F"Hostel name: {self.name}" \
-               F"Hostel ID: {self.id}"
+        return F"Hostel name: {self.name} | Hostel ID: {self.id}"
 
     
 class HostelRooms(Model):
-    book: ManyToManyField = models.ManyToManyField(Booking, related_name='booked_room')
     hostel: ForeignKey = models.ForeignKey(Hostel, related_name='rooms', on_delete=models.CASCADE)
     image: ImageField = models.ImageField(upload_to="room_img/%y/%m/%d", blank=True)
     is_occupied: BooleanField = models.BooleanField(default=False)
@@ -51,6 +49,5 @@ class HostelRooms(Model):
     def __str__(self) -> str:
         """Return room number and ID as string when queried.
         """
-        return F"Room number {self.room_number}" \
-               F"Room ID: {self.id}"
+        return F"belongs to: {self.hostel.name} Room number: {self.room_number}"
     

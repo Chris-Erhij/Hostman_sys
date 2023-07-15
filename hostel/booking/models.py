@@ -2,7 +2,7 @@ from django.core.validators import validate_email
 from django.db import models
 from django.db.models import (
     Model, DateField, BooleanField,
-    DecimalField, CharField, EmailField, OneToOneField
+    ManyToManyField, CharField, EmailField, OneToOneField
 )
 from accounts.models import CustomeUser
 
@@ -16,6 +16,7 @@ class Booking(Model):
     ]
 
     user: OneToOneField = models.OneToOneField(CustomeUser, on_delete=models.CASCADE, related_name='booking', null=True)
+    room: ManyToManyField = models.ManyToManyField('hostel_main.HostelRooms', related_name='booking')
     first_name: CharField = models.CharField(max_length=150, verbose_name='First name', blank=True)
     last_name: CharField = models.CharField(max_length=150, verbose_name='Last name', blank=True)
     email: EmailField = models.EmailField(blank=False, verbose_name='Email', help_text='Enter valid email', validators=[validate_email], null=True)
