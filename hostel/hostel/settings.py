@@ -38,9 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hostel_main.apps.HostelMainConfig',
     'accounts.apps.AccountsConfig',
     'booking.apps.BookingConfig',
+    'hostel_main.apps.HostelMainConfig',
+    'payment.apps.PaymentConfig'
 ]
 
 MIDDLEWARE = [

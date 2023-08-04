@@ -1,1 +1,34 @@
+ {% extends 'hostel_main/base.html' %}
+ {% load static %}
+
+ {% block title %} All available hostels {% endblock %}
+ {% block content %}
  
+    {% if user.is_anonymous %}
+        {% include "hostel_main/accommodation/includes/header.html" %}
+    {% else %}
+        {% include 'hostel_main/accommodation/includes/res-header.html' %}
+    {% endif %}
+
+    {% for hostel in hostels %}
+        <div class="card">
+            <div class="card-image">
+                <a href="{{ hostel.image.url }}"> <img src="{% if hostel.image %}{{ hostel.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="{{ hostel.name }} background image">
+                </a>
+            </div>
+            <div class="card-content">
+                <h4>{{ hostel.name }}</h4>
+                <div class="hostel_description">
+                    <p>{{ hostel.description|truncatewords:6 }}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'hostel_main:hostel-detail-view' hostel.id %}" class="button btn-primary">More Details</a>
+        </div>
+        </div>
+    {% endfor %}
+
+    {% include 'pagination.html' with page=hostels %}
+
+    {% include "hostel_main/accommodation/includes/footer.html" %}
+ {% endblock %}

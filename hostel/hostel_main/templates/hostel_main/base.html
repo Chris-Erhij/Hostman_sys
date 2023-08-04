@@ -12,7 +12,13 @@
     </head>
     <body>
     {% block content %}
-        {% include 'hostel_main/accommodation/includes/header.html' %}
+
+        {% if not user.is_anonymous %}
+            {% include 'hostel_main/accommodation/includes/res-header.html' %}
+        {% else %}
+            {% include "hostel_main/accommodation/includes/header.html" %}
+        {% endif %}
+
         <div class="quest dash">
 
             <!--Add background images-->
@@ -25,7 +31,7 @@
                        because we have the most <em>luxurious, affordable, and amenities packed</em>rooms guaranteed to give you a
                        memorable stay.
                     </p>
-                    <a href="#" class="button-anime">Explore</a>
+                    <a href="{% url 'hostel_main:list-room-view' %}" class="button-anime">Explore</a>
                 </div>
             </div>
 
@@ -51,27 +57,25 @@
                 <div class="scrollable-cards-wrapper">
                     {% for hostel in hostels %}
                     <div class="scrollable-cards">
-                        <div class='container-cards'>
-                            <div class="card">
-                                <div class="card-image">
-                                    <a href="{{ hostel.image.url }}"> <img src="{% if hostel.image %}{{ hostel.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="{{ hostel.name }} background image">
-                                    </a>
+                        <div class="card">
+                            <div class="card-image">
+                                <a href="{{ hostel.image.url }}"> <img src="{% if hostel.image %}{{ hostel.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="{{ hostel.name }} background image">
+                                </a>
+                            </div>
+                            <div class="card-content">
+                                <h4>{{ hostel.name }}</h4>
+                                <div class="hostel_description">
+                                    <p>{{ hostel.description|truncatewords:6 }}</p>
                                 </div>
-                                <div class="card-content">
-                                    <h4>{{ hostel.name }}</h4>
-                                    <div class="hostel_description">
-                                        <p>{{ hostel.description|truncatewords:6 }}</p>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <a href="#" class="button">More Details</a>
-                                </div>
-                            </div>                        
-                        </div>                    
+                            </div>
+                            <div class="card-footer">
+                                <a href="{% url 'hostel_main:hostel-detail-view' hostel.id %}" class="button">More Details</a>
+                            </div>
+                        </div>                        
                     </div>
                     {% endfor %}
                 </div>
-                <a href="{% url 'hostel_main:home-guest-view' %}" class="button">Browse more Hostels</a>
+                <a href="{% url 'hostel_main:list-hostel-view' %}" class="button">Browse more Hostels</a>
             </div>
 
             <!--Create cards inside this 'rooms' div class with rooms preview detail having a room number in the card head, image in the card content,
@@ -82,26 +86,24 @@
                 <div class="scrollable-cards-wrapper">
                     {% for room in rooms %}
                     <div class="scrollable-cards">
-                        <div class="container-cards">
-                            <div class="card">
-                                <div class="card-image">
-                                    <a href="{{ room.image.url }}"> <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="room image">
-                                    </a>
-                                </div>
-                                <div class="card-content">
-                                    <h4>room number {{ room.room_number }}</h4>
-                                    <p>room available in {{ room.hostel.name }}</p>
-                                    <P>room capacity {{ room.room_capacity }}</P>
-                                </div>
-                                <div class="card-footer">
-                                    <a href="#" class="button">More Details</a>
-                                </div>
+                        <div class="card">
+                            <div class="card-image">
+                                <a href="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}"> <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="room image">
+                                </a>
                             </div>
-                        </div>                    
+                            <div class="card-content">
+                                <h4>room number {{ room.room_number }}</h4>
+                                <p>room available in {{ room.hostel.name }}</p>
+                                <P>room capacity {{ room.room_capacity }}</P>
+                            </div>
+                            <div class="card-footer">
+                                <a href="{% url 'hostel_main:room-detail-view' room.id %}" class="button">More Details</a>
+                            </div>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
-                <a href="{% url 'hostel_main:home-guest-view' %}" class="button">Browse more Rooms</a>
+                <a href="{% url 'hostel_main:list-room-view' %}" class="button">Browse more Rooms</a>
             </div>
 
             <!--Populate the 'p' elements inside this 'testimonial' div class with random testimonials in
@@ -142,7 +144,7 @@
                         </div>
                         <div class="customer-testimonial">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Fusce consequat aliquet turpis id tempus<br>
-                               Lorem ipsum dolor sit amet,<br>consectetur adipiscing elit. Fusce consequat aliquet turpis id tempus
+                               Lorem ipsum dolor sit amet,<br>consectetur adipiscing elit. <br>Fusce consequat aliquet turpis id tempus
                             </p>
                         </div>
                         <div class="customer-name">

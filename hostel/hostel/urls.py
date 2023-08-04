@@ -21,9 +21,10 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('booking/', include('booking.urls', namespace='booking')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('booking/', include('booking.urls', namespace='booking')),
     path('home/', include('hostel_main.urls', namespace='hostel_main')),
+    path('payment/', include('payment.urls', namespace='payment'))
 ]
 
 # Concatenate static media file path into project urlpatterns.

@@ -1,0 +1,32 @@
+{% extends 'hostel_main/base.html' %}
+{% load static %}
+
+{% block title %} Room Detail {% endblock %}
+{% block content %}
+
+    {% if user.is_authenticated %}
+        {% include 'hostel_main/accommodation/includes/res-header.html' %}
+    {% else %}
+        {% include 'hostel_main/accommodation/includes/header.html' %}
+    {% endif %}
+
+    <div class="roodet">
+        <button class="bookbutt" type="button"><a href="{% url 'booking:booking-create-view' room.id %}">Book now</a></button>
+        <div class="roo-oth-det">
+            <div class="roohost">{{ room.hostel.name }}</div>
+            <div class="roonum">room number <p>{{ room.room_number }}</p></div>
+            <div class="rooprice">price per bed <p>{{ room.bed_price }}</p></div>
+            <div class="roocap">capacity <p>{{ room.room_capacity }}</p></div>
+            <div class="roo-avail-bed">available bed <p>{{ room.get_availability_status|pluralize }}</p></div>
+            <div class="roodesrpt">{{ room.description }}</div>
+            <div class="roofeat">features <p>{{ room.features }}</p></div>
+        </div>
+        <div class="rooimg">
+            <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="room image"
+            style="width: 1192px; height: 700px;">
+        </div>
+        <button class="bookbutt" type="button"><a href="{% url 'booking:booking-create-view' room.id %}">Book now</a></button>
+    </div>
+
+    {% include 'hostel_main/accommodation/includes/footer.html' %}
+{% endblock %}

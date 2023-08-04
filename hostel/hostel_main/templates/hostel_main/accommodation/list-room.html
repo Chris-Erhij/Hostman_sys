@@ -1,0 +1,36 @@
+{% extends "hostel_main/base.html" %}
+{% load static %}
+
+{% block title %} All available rooms {% endblock %}
+{% block content %}
+
+    {% if not user.is_authenticated %}
+        {% include 'hostel_main/accommodation/includes/header.html' %}
+    {% else %}
+        {% include "hostel_main/accommodation/includes/res-header.html" %}
+    {% endif %}
+
+    {% for room in rooms %}
+        <div class="hostel-rooms">
+            <div class="card">
+                <div class="card-image">
+                    <a href="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}"> <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="room image">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h4>room number {{ room.room_number }}</h4>
+                    <p>room available in {{ room.hostel.name }}</p>
+                    <P>room capacity {{ room.room_capacity }}</P>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'booking:booking-create-view' room.id %}" class="button">Book now</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% include 'pagination.html' with page=rooms %}
+
+    {% include 'hostel_main/accommodation/includes/footer.html' %}
+
+{% endblock %}

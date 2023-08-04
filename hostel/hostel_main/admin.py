@@ -10,7 +10,7 @@ class HostelRoomsInline(admin.TabularInline):
 @admin.register(Hostel)
 class HostelAdmin(admin.ModelAdmin):
     list_display = [
-        'image', 'name', 'address', 'capacity',
+        'name', 'user', 'image', 'address', 'capacity',
         'description', 'available','created', 'updated',
     ]
     list_filter = [

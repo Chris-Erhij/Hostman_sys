@@ -1,9 +1,53 @@
-{% extends 'base.html' %}
+{% extends 'hostel_main/base.html' %}
 {% load static %}
 
 {% block title %} {{ hostel.name }} {% endblock %}
 {% block content %}
-    {% include 'hostel_main/accommodation/res_header.html' %}
 
-    {% include 'hostel_main/accommodation/footer.html' %}
+    {% if user.is_authenticated %}
+        {% include 'hostel_main/accommodation/includes/res-header.html' %}
+    {% else %}
+        {% include 'hostel_main/accommodation/includes/header.html' %}
+    {% endif %}
+
+    <div class="hostel-details">
+        <legend>
+            <h3>{{ hostel.name }}</h3>
+            <div class="other-details">
+                <div class="flex-addss-cap">
+                    <div class="address"><img src="address.ico"> {{ hostel.address}}</div>
+                    <div class="slogan"><img src="slogan.ico"> {{ hostel.slogan }} </div>
+                    <div class="capacity"><img src="capacity.ico"> capacity {{ hostel.capacity }}</div> 
+                </div>
+                <div class="disptn">
+                    <p>{{ hostel.description }}</p>
+                </div>
+                <div class="hostel-img">
+                    {% if not  hostel.available %} <h3 class="inlay-occupied-tag"> Occupied </h3> {% endif %}
+                    <img src="{% if hostel.image %}{{ hostel.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="{{ hostel.name }} image" 
+                    style="width: 1192px; height: 700px;">
+                </div>
+                <div class="hostel-rooms">
+                    {% for room in hostel_rooms %}
+                    <div class="card">
+                        <div class="card-image">
+                            <a href="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}"> <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" alt="room image">
+                            </a>
+                        </div>
+                        <div class="card-content">
+                            <h4>room number {{ room.room_number }}</h4>
+                            <p>room available in {{ room.hostel.name }}</p>
+                            <P>room capacity {{ room.room_capacity }}</P>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'hostel_main:room-detail-view' room.id %}" class="button btn-primary">Details</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </div>     
+                </div>
+            </div>
+        </legend>
+    </div>
+    {% include 'hostel_main/accommodation/includes/footer.html' %}
 {% endblock %}
