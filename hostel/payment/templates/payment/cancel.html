@@ -1,0 +1,24 @@
+{% extends 'hostel_main/base.html' %}
+{% load static %}
+
+
+{% block title %} Payment Canceled {% endblock %}
+{% block content %}
+
+    {% if user.is_authenticated %}
+        {% include 'hostel_main/accommodation/includes/res-header.html' %}
+    {% else %}
+        {% include "hostel_main/accommodation/includes/header.html" %}
+    {% endif %}
+
+    <div class="boocan">
+        <h1> Payment Error</h1>
+        <div class="boomsg">
+            <p>Oops! an unknown error occured while verifying payment. Please try again</p>
+        </div>
+    </div>
+
+    {% include 'hostel_main/accommodation/includes/footer.html' %}
+
+{% endblock %}
+    

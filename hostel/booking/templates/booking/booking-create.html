@@ -1,0 +1,16 @@
+{% extends 'hostel_main/base.html' %}
+{% load static %}
+
+{% block title %} Checkout {% endblock %}
+{% block content %}
+    <h1> Checkout </h1>
+
+    <div class="booking-info">
+        <form action="{% url 'payment:pay-success-view' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="proceed">
+        </form>
+    </div>
+    
+{% endblock %}

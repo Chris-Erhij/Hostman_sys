@@ -1,0 +1,35 @@
+{% extends 'hostel_main/base.html' %}
+{% load static %}
+
+
+{% block title %} Payment Successful {% endblock %}
+{% block content %}
+
+    {% if user.is_authenticated %}
+        {% include 'hostel_main/accommodation/includes/res-header.html' %}
+    {% else %}
+        {% include "hostel_main/accommodation/includes/header.html" %}
+    {% endif %}
+
+    <div class="boosuc">
+        <h1> Payment Successful </h1>
+        <div class="boomsg">
+
+            {% if user.is_authenticated and booking_id %}
+                <p>Congrats! {{ user.name }} making payment for your booking was successful. An email has be sent containing booking details.
+                    Booking ID: <strong>{{ booking_id }}</strong>
+                </p>
+
+            {% elif not user.is_authenticated and booking_id %}
+                <p>Congrats! making payment for your booking was successful. An email has be sent containing booking details.
+                    Booking ID: <strong>{{ booking_id }}</strong>
+                </p>
+            {% endif %}
+
+        </div>
+    </div>
+
+    {% include 'hostel_main/accommodation/includes/footer.html' %}
+
+{% endblock %}
+    

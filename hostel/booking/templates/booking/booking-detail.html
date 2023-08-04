@@ -1,0 +1,41 @@
+{% extends 'hostel_main/base.html' %}
+{% load static %}
+
+{% block title %} Checkout {% endblock %}
+{% block content %}
+
+    {% if user.is_authenticated %}
+        {% include "hostel_main/accommodation/includes/res-header.html" %}
+    {% else %}
+        {% include 'hostel_main/accommodation/includes/header.html' %}
+    {% endif %}
+
+    <div class="boock">
+
+        {% if booking %}
+            <h1> My Booking </h1>
+        {% else %}
+            <h1> Empty </h1>
+        {% endif %}
+
+        <div class="boodet">
+
+            {% if user.is_authenticated and booking_id %}
+                <p>Hello! {{ user.username }}, your booking ID:<strong> {{ booking_id }} </strong>
+                </p>
+
+            {% elif not user.is_authenticated and booking_id %}
+                <p>Hello! your booking ID: <strong>{{ booking_id }}</strong></p>
+
+            {% else %}
+                <p>You have not made any booking yet browse<a href="{% url 'hostel_main:list-room-view' %}"> rooms</a> or 
+                    <a href="{% url 'hostel_main:list-hostel-view' %}">hostels </a>to make a booking now
+                </p>
+            {% endif %}
+
+        </div>
+    </div>
+
+    {% include "hostel_main/accommodation/includes/footer.html" %}
+
+{% endblock %}
